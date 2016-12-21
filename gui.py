@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 #Copyright (C) 2016 Michał Nieznański
 try:
+    #Python3
     import tkinter as tk
 except:
+    #Python2
     import Tkinter as tk
 from array import array
 import numpy
