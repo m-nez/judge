@@ -1,4 +1,4 @@
-usage: gui.py [-h] [-g | -f FILE] [-s SIZE] [-x WIDTH] [-y HEIGHT] [-e]  
+`usage: gui.py [-h] [-g | -f FILE] [-s SIZE] [-x WIDTH] [-y HEIGHT] [-e]  
               [-t TIMEOUT] [-p]  
               prog1 prog2  
 
@@ -24,3 +24,4 @@ optional arguments:
   
 e.g.  
 	python gui.py "python prog1.py" "python prog1.py" -g -s 7  
+`
