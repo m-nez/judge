@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #Copyright (C) 2016 Michał Nieznański
+from __future__ import print_function
 try:
     #Python3
     import tkinter as tk
 except:
     #Python2
     import Tkinter as tk
-from array import array
-import numpy
 from judge import Judge
 import argparse
 import threading
@@ -20,7 +19,7 @@ class Board():
         """
         self.enumerate = enum
         self.size = size[0]
-        self.array = numpy.zeros((size), numpy.uint8)
+        self.array = [ [ 0 for i in range(size[0]) ] for j in range(size[0])]
         self.canvas = canvas
         self.w = int(self.canvas["width"])
         self.h = int(self.canvas["height"])
@@ -33,24 +32,24 @@ class Board():
         w = self.w
         h = self.h
         fill = "#000000"
-        for i in range(1, self.array.shape[0]): # Horizontal lines
+        for i in range(1, self.size): # Horizontal lines
             self.canvas.create_line(
-                    0, i * h / float(self.array.shape[0]),
-                    w, i * h / float(self.array.shape[0]),
+                    0, i * h / float(self.size),
+                    w, i * h / float(self.size),
                     fill=fill
                     )
-        for i in range(1, self.array.shape[1]): # Vertical lines
+        for i in range(1, self.size): # Vertical lines
             self.canvas.create_line(
-                    i * w / float(self.array.shape[1]), 0,
-                    i * w / float(self.array.shape[1]), h,
+                    i * w / float(self.size), 0,
+                    i * w / float(self.size), h,
                     fill=fill
                     )
     def add_elem(self, x0, y0, x1, y1, val):
         self.array[y0][x0] = val
         self.array[y1][x1] = val
 
-        x_step = self.w / float(self.array.shape[1])
-        y_step = self.h / float(self.array.shape[0])
+        x_step = self.w / float(self.size)
+        y_step = self.h / float(self.size)
         rx0 = min(x0, x1) * x_step + 1
         rx1 = (max(x0, x1) + 1 ) * x_step
         ry0 = min(y0, y1) * y_step + 1

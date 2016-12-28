@@ -1,10 +1,20 @@
 # -*- coding: UTF-8 -*-
 #Copyright (C) 2016 Michał Nieznański
-from sys import argv
+from __future__ import print_function
+from sys import argv, version_info
 from time import sleep
 from sys import stdout, stderr, stdin
 from random import randint
-import numpy
+
+if version_info[0] == 2:
+    input = raw_input
+
+def print_and_flush(*args, **kwargs):
+    print(*args, **kwargs)
+    stdout.flush()
+
+def err(msg):
+    stderr.write(msg + "\n")
 
 def move(array):
     offset = [[-1, 0], [1, 0], [0, -1], [0, 1]]
@@ -12,7 +22,7 @@ def move(array):
         for x, e in enumerate(r):
             if e == 0:
                 for o in offset:
-                    size = array.shape[0]
+                    size = len(array)
                     if size > y + o[1] >= 0 and size > x + o[0] >= 0:
                         if array[y + o[1]][x + o[0]] == 0:
                             return "%d %d %d %d" % (
@@ -29,28 +39,28 @@ def make_move(array, m, v):
     array[ints[3]][ints[2]] = v
 
 ping = input()
-print("PONG")
+print_and_flush("PONG")
 stdout.flush()
 size = input()
 size = int(size)
 
-array = numpy.zeros((size, size), numpy.uint8)
+array = [[ 0 for i in range(size)] for j in range(size)]
 
 first = input()
 if first == "ZACZYNAJ":
     m = move(array)
     make_move(array, m, 1)
-    print(m)
+    print_and_flush(m)
 else:
     m = first
     make_move(array, m, 2)
     m = move(array)
     make_move(array, m, 1)
-    print(m)
+    print_and_flush(m)
 while True:
     m = input()
     sleep(0.02)
     make_move(array, m, 2)
     m = move(array)
     make_move(array, m, 1)
-    print(m)
+    print_and_flush(m)

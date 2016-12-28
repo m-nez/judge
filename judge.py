@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2016 Michał Nieznański
+from __future__ import print_function
 import subprocess
 import shlex
 import timeout
