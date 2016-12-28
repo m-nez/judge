@@ -105,7 +105,7 @@ class Main(tk.Frame):
             self.master.protocol("WM_DELETE_WINDOW", self.on_quit)
             self.master.bind("<Key>", self.step_callback)
         else:
-            self.judge.play()
+            self.master.after(1, self.judge.play)
     def on_quit(self):
         self.judge.finish(0)
         self.master.quit()
