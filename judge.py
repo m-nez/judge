@@ -6,7 +6,6 @@ import shlex
 import timeout
 import atexit
 import time
-import numpy
 
 def readline_timed(stream, t):
     result = -1
@@ -21,7 +20,7 @@ class Judge():
         self.wait_time = wait_time
         self.prog1 = prog1
         self.prog2 = prog2
-        self.array = numpy.zeros((size, size), numpy.uint8)
+        self.array = [[ 0 for i in range(size) ] for j in range(size)]
         self.set = set((i, j) for i in range(size) for j in range(size))
     def next_move_possible(self):
         offset = [
