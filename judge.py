@@ -62,8 +62,8 @@ class Judge():
         if win == 1 or win == 2:
             print("WIN:", win)
         if sys.platform.startswith("win"):
-            os.system("taskkill /pid %d", self.p1.pid)
-            os.system("taskkill /pid %d", self.p1.pid)
+            os.system("taskkill /pid %d /F" % self.p1.pid)
+            os.system("taskkill /pid %d /F" % self.p2.pid)
         else:
             self.p1.kill()
             self.p2.kill()
