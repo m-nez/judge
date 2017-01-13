@@ -6,6 +6,8 @@ import shlex
 import timeout
 import atexit
 import time
+import sys
+import os
 
 def readline_timed(stream, t):
     result = -1
@@ -59,9 +61,12 @@ class Judge():
             pass
         if win == 1 or win == 2:
             print("WIN:", win)
-        self.p1.kill()
-        self.p2.kill()
-
+        if sys.platform.startswith("win"):
+            os.system("taskkil /pid %d", self.p1.pid)
+            os.system("taskkil /pid %d", self.p1.pid)
+        else:
+            self.p1.kill()
+            self.p2.kill()
         return win
 
     def validate(self, string):
@@ -97,11 +102,11 @@ class Judge():
         return 0
 
     def play(self):
-        self.play_start()
-        while True:
-            r = self.play_step()
-            if r != None:
-                return r
+        if self.play_start() == None: # No return value means it's ok
+            while True:
+                r = self.play_step()
+                if r != None:
+                    return r
 
     def play_start(self):
         self.p1 = subprocess.Popen(

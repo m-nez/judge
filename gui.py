@@ -101,9 +101,9 @@ class Main(tk.Frame):
         self.master.title("JudgeGUI")
         self.judge = Judge(self.size, self.prog1, self.prog2, self.board.update_func, self.wait_time)
         if self.step:
-            self.judge.play_start()
-            self.master.protocol("WM_DELETE_WINDOW", self.on_quit)
-            self.master.bind("<Key>", self.step_callback)
+            if self.judge.play_start() == None: # No return value means it's ok
+                self.master.protocol("WM_DELETE_WINDOW", self.on_quit)
+                self.master.bind("<Key>", self.step_callback)
         else:
             self.master.after(1, self.judge.play)
     def on_quit(self):
