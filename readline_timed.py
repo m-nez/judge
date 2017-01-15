@@ -1,25 +1,29 @@
-import multiprocessing
-from time import sleep
-from sys import stdin
-import os
+# -*- coding: utf-8 -*-
+# Copyright (C) 2016 Michał Nieznański
 
-def f(fd, q):
-    fl = open(fd, "r")
-    l = fl.readline()
+from time import sleep
+import threading
+try:
+    from queue import Queue
+except:
+    # Python 2
+    from Queue import Queue
+
+def f(stream, q):
+    l = stream.readline()
     q.put(l)
 
 def readline_timed(stream, t):
-    q = multiprocessing.Queue()
-    p = multiprocessing.Process(
+    q = Queue()
+    p = threading.Thread(
             target=f,
-            args=[os.dup(stream.fileno()), q],
-            daemon=True
+            args=[stream, q]
             )
+    p.setDaemon(True)
     p.start()
 
     try:
         r = q.get(True, t)
-    except Exception:
+    except:
         r = -1
-    p.terminate()
     return r

@@ -8,13 +8,6 @@ import time
 import sys
 import os
 from readline_timed import readline_timed
-#import timeout
-
-#def readline_timed(stream, t):
-#    result = -1
-#    with timeout.Timeout(t) as tout:
-#        result = stream.readline()
-#    return result
 
 class Judge():
     def __init__(self, size, prog1, prog2, update_func = None, wait_time = 1):
@@ -62,10 +55,6 @@ class Judge():
             pass
         if win == 1 or win == 2:
             print("WIN:", win)
-        #if sys.platform.startswith("win"):
-        #    os.system("taskkill /pid %d /F" % self.p1.pid)
-        #    os.system("taskkill /pid %d /F" % self.p2.pid)
-        #else:
         self.p1.kill()
         self.p2.kill()
         return win
@@ -103,11 +92,14 @@ class Judge():
         return 0
 
     def play(self):
-        if self.play_start() == None: # No return value means it's ok
+        start_result = self.play_start()
+        if start_result == None: # No return value means it's ok
             while True:
                 r = self.play_step()
                 if r != None:
                     return r
+        else:
+            return start_result
 
     def play_start(self):
         self.p1 = subprocess.Popen(
@@ -132,7 +124,7 @@ class Judge():
         #print("RECV1:",r)
         r = readline_timed(self.p2.stdout, self.wait_time)
         if r == -1:
-            return self.finish(2)
+            return self.finish(1)
         r = r.strip()
         #print("RECV2:",r)
         self.write(1, str(self.size) + "\n")
