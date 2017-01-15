@@ -3,17 +3,18 @@
 from __future__ import print_function
 import subprocess
 import shlex
-import timeout
 import atexit
 import time
 import sys
 import os
+from readline_timed import readline_timed
+#import timeout
 
-def readline_timed(stream, t):
-    result = -1
-    with timeout.Timeout(t) as tout:
-        result = stream.readline()
-    return result
+#def readline_timed(stream, t):
+#    result = -1
+#    with timeout.Timeout(t) as tout:
+#        result = stream.readline()
+#    return result
 
 class Judge():
     def __init__(self, size, prog1, prog2, update_func = None, wait_time = 1):
@@ -61,12 +62,12 @@ class Judge():
             pass
         if win == 1 or win == 2:
             print("WIN:", win)
-        if sys.platform.startswith("win"):
-            os.system("taskkill /pid %d /F" % self.p1.pid)
-            os.system("taskkill /pid %d /F" % self.p2.pid)
-        else:
-            self.p1.kill()
-            self.p2.kill()
+        #if sys.platform.startswith("win"):
+        #    os.system("taskkill /pid %d /F" % self.p1.pid)
+        #    os.system("taskkill /pid %d /F" % self.p2.pid)
+        #else:
+        self.p1.kill()
+        self.p2.kill()
         return win
 
     def validate(self, string):
